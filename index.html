@@ -2070,6 +2070,342 @@
         </div>
     </footer>
 
+    <!-- ==========================================
+       무료 체험 신청 모달
+    ========================================== -->
+    <div class="modal-overlay" id="trialModal" onclick="closeModalOutside(event)">
+      <div class="modal">
+
+        <!-- 모달 헤더 -->
+        <div class="modal-header">
+          <div>
+            <span class="section-label" style="margin-bottom:8px;">14일 무료 체험</span>
+            <h2 class="modal-title">무료 체험 신청</h2>
+            <p class="modal-desc">신청 후 영업일 기준 1~2일 내 담당자가 연락드립니다</p>
+          </div>
+          <button class="modal-close" onclick="closeModal()" aria-label="닫기">✕</button>
+        </div>
+
+        <!-- 모달 바디 -->
+        <form class="modal-form" onsubmit="submitForm(event)">
+
+          <!-- 이름 + 연락처 -->
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">이름 <span class="required">*</span></label>
+              <input type="text" class="form-input" placeholder="홍길동" required />
+            </div>
+            <div class="form-group">
+              <label class="form-label">연락처 <span class="required">*</span></label>
+              <input type="tel" class="form-input" placeholder="010-0000-0000" required />
+            </div>
+          </div>
+
+          <!-- 이메일 -->
+          <div class="form-group">
+            <label class="form-label">이메일 <span class="required">*</span></label>
+            <input type="email" class="form-input" placeholder="hello@example.com" required />
+          </div>
+
+          <!-- 주소 -->
+          <div class="form-group">
+            <label class="form-label">설치 주소 <span class="required">*</span></label>
+            <input type="text" class="form-input" placeholder="서울특별시 강남구 테헤란로 000" required />
+          </div>
+
+          <!-- 플랜 선택 -->
+          <div class="form-group">
+            <label class="form-label">체험 플랜 <span class="required">*</span></label>
+            <div class="plan-select-group">
+              <label class="plan-option">
+                <input type="radio" name="plan" value="LITE" />
+                <span class="plan-option-box">
+                  <strong>LITE</strong>
+                  <span>39,900원/월 · 1인 가구</span>
+                </span>
+              </label>
+              <label class="plan-option">
+                <input type="radio" name="plan" value="STANDARD" checked />
+                <span class="plan-option-box featured">
+                  <strong>STANDARD</strong>
+                  <span>59,900원/월 · 맞벌이 추천</span>
+                  <em>인기</em>
+                </span>
+              </label>
+              <label class="plan-option">
+                <input type="radio" name="plan" value="FAMILY" />
+                <span class="plan-option-box">
+                  <strong>FAMILY</strong>
+                  <span>79,900원/월 · 3인 이상</span>
+                </span>
+              </label>
+            </div>
+          </div>
+
+          <!-- 방문 희망일자 + 시간 -->
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">방문 희망일자 <span class="required">*</span></label>
+              <input type="date" class="form-input" id="visitDate" required />
+            </div>
+            <div class="form-group">
+              <label class="form-label">방문 희망시간 <span class="required">*</span></label>
+              <select class="form-input form-select" required>
+                <option value="" disabled selected>시간대 선택</option>
+                <option>09:00 – 11:00</option>
+                <option>11:00 – 13:00</option>
+                <option>13:00 – 15:00</option>
+                <option>15:00 – 17:00</option>
+                <option>17:00 – 19:00</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- 개인정보 동의 -->
+          <label class="form-check">
+            <input type="checkbox" required />
+            <span>
+              <a href="#" class="form-link">개인정보처리방침</a>에 동의합니다 <span class="required">*</span>
+            </span>
+          </label>
+
+          <!-- 제출 버튼 -->
+          <button type="submit" class="btn btn-primary" style="width:100%; justify-content:center; padding:16px; font-size:1rem;">
+            무료 체험 신청하기
+          </button>
+
+          <p style="text-align:center; font-size:12px; color:var(--color-text-disabled); margin-top:12px;">
+            신용카드 등록 불필요 · 자동 결제 없음 · 14일 후 원하실 때 결제
+          </p>
+
+        </form>
+
+        <!-- 제출 완료 화면 -->
+        <div class="modal-success">
+          <div class="success-icon">✓</div>
+          <p class="success-title">신청이 완료됐습니다!</p>
+          <p class="success-desc">
+            입력하신 연락처로 영업일 기준 1~2일 내<br>
+            담당자가 방문 일정을 확정 연락드립니다.<br><br>
+            <strong>14일 무료 체험</strong>을 즐겨보세요 🎉
+          </p>
+          <button class="btn btn-primary" onclick="closeModal()" style="margin-top:8px;">
+            확인
+          </button>
+        </div>
+
+      </div>
+    </div>
+
+    <style>
+      /* 모달 오버레이 */
+      .modal-overlay {
+        display: none;
+        position: fixed;
+        inset: 0;
+        background: rgba(0,0,0,0.55);
+        backdrop-filter: blur(4px);
+        z-index: 999;
+        align-items: center;
+        justify-content: center;
+        padding: 20px;
+      }
+      .modal-overlay.active { display: flex; }
+
+      /* 모달 박스 */
+      .modal {
+        background: var(--color-surface);
+        border-radius: var(--radius-lg);
+        width: 100%;
+        max-width: 600px;
+        max-height: 90vh;
+        overflow-y: auto;
+        box-shadow: 0 24px 60px rgba(0,0,0,0.2);
+        animation: modalIn 0.25s ease;
+      }
+      @keyframes modalIn {
+        from { opacity: 0; transform: translateY(16px) scale(0.98); }
+        to   { opacity: 1; transform: translateY(0) scale(1); }
+      }
+
+      /* 모달 헤더 */
+      .modal-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        padding: 28px 28px 0;
+      }
+      .modal-title {
+        font-size: 1.4rem;
+        font-weight: 800;
+        letter-spacing: -0.03em;
+        margin-bottom: 4px;
+      }
+      .modal-desc {
+        font-size: 13px;
+        color: var(--color-text-secondary);
+      }
+      .modal-close {
+        background: none;
+        border: none;
+        font-size: 18px;
+        color: var(--color-text-secondary);
+        cursor: pointer;
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: background 0.15s;
+        flex-shrink: 0;
+      }
+      .modal-close:hover { background: var(--color-bg); }
+
+      /* 폼 */
+      .modal-form {
+        padding: 24px 28px 28px;
+        display: flex;
+        flex-direction: column;
+        gap: 18px;
+      }
+      .form-row {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 14px;
+      }
+      .form-group {
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+      }
+      .form-label {
+        font-size: 13px;
+        font-weight: 600;
+        color: var(--color-text-primary);
+      }
+      .required { color: var(--color-primary-hover); }
+      .form-input {
+        font-family: var(--font-base);
+        font-size: 14px;
+        padding: 11px 14px;
+        border: 1px solid var(--color-border);
+        border-radius: var(--radius-sm);
+        background: var(--color-bg);
+        color: var(--color-text-primary);
+        transition: border-color 0.15s, box-shadow 0.15s;
+        outline: none;
+        width: 100%;
+      }
+      .form-input:focus {
+        border-color: var(--color-primary);
+        box-shadow: 0 0 0 3px rgba(45,212,191,0.12);
+      }
+      .form-select { cursor: pointer; }
+
+      /* 플랜 선택 */
+      .plan-select-group {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 10px;
+      }
+      .plan-option { cursor: pointer; }
+      .plan-option input { display: none; }
+      .plan-option-box {
+        display: flex;
+        flex-direction: column;
+        gap: 3px;
+        padding: 12px;
+        border: 1px solid var(--color-border);
+        border-radius: var(--radius-sm);
+        text-align: center;
+        transition: border-color 0.15s, background 0.15s;
+        position: relative;
+      }
+      .plan-option-box strong {
+        font-size: 13px;
+        font-weight: 700;
+        color: var(--color-text-primary);
+      }
+      .plan-option-box span {
+        font-size: 11px;
+        color: var(--color-text-secondary);
+      }
+      .plan-option-box em {
+        position: absolute;
+        top: -8px;
+        left: 50%;
+        transform: translateX(-50%);
+        background: var(--color-accent);
+        color: #78510A;
+        font-size: 10px;
+        font-weight: 700;
+        font-style: normal;
+        padding: 2px 8px;
+        border-radius: var(--radius-pill);
+        white-space: nowrap;
+      }
+      .plan-option-box.featured {
+        border-color: var(--color-primary);
+        background: var(--color-primary-light);
+      }
+      .plan-option input:checked + .plan-option-box {
+        border-color: var(--color-primary);
+        background: var(--color-primary-light);
+      }
+
+      /* 개인정보 동의 */
+      .form-check {
+        display: flex;
+        align-items: flex-start;
+        gap: 10px;
+        font-size: 13px;
+        color: var(--color-text-secondary);
+        cursor: pointer;
+      }
+      .form-check input { margin-top: 2px; accent-color: var(--color-primary); flex-shrink: 0; }
+      .form-link { color: var(--color-primary-hover); text-decoration: underline; }
+
+      /* 모달 반응형 */
+      @media (max-width: 600px) {
+        .modal-header { padding: 20px 20px 0; }
+        .modal-form { padding: 20px; gap: 14px; }
+        .form-row { grid-template-columns: 1fr; }
+        .plan-select-group { grid-template-columns: 1fr; }
+      }
+
+      /* 완료 화면 */
+      .modal-success {
+        display: none;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        padding: 48px 28px;
+        gap: 16px;
+      }
+      .modal-success.active { display: flex; }
+      .success-icon {
+        width: 64px;
+        height: 64px;
+        background: var(--color-primary-light);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 2rem;
+      }
+      .success-title {
+        font-size: 1.3rem;
+        font-weight: 800;
+        letter-spacing: -0.02em;
+      }
+      .success-desc {
+        font-size: 14px;
+        color: var(--color-text-secondary);
+        line-height: 1.7;
+      }
+    </style>
+
     <script>
         // D-day 카운터 계산
         (function () {
@@ -2087,10 +2423,52 @@
         function toggleFaq(btn) {
             const item = btn.closest('.faq-item');
             const isOpen = item.classList.contains('open');
-            // 다른 항목 닫기
             document.querySelectorAll('.faq-item.open').forEach(el => el.classList.remove('open'));
             if (!isOpen) item.classList.add('open');
         }
+
+        // 모달 열기
+        function openModal() {
+            document.getElementById('trialModal').classList.add('active');
+            document.body.style.overflow = 'hidden';
+            // 오늘 기준 최소 방문일 설정 (내일부터)
+            const tomorrow = new Date();
+            tomorrow.setDate(tomorrow.getDate() + 1);
+            const minDate = tomorrow.toISOString().split('T')[0];
+            document.getElementById('visitDate').min = minDate;
+        }
+
+        // 모달 닫기
+        function closeModal() {
+            document.getElementById('trialModal').classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        // 오버레이 클릭 시 닫기
+        function closeModalOutside(e) {
+            if (e.target === document.getElementById('trialModal')) closeModal();
+        }
+
+        // ESC 키로 닫기
+        document.addEventListener('keydown', e => {
+            if (e.key === 'Escape') closeModal();
+        });
+
+        // 폼 제출 처리
+        function submitForm(e) {
+            e.preventDefault();
+            document.querySelector('.modal-form').style.display = 'none';
+            document.querySelector('.modal-header').style.display = 'none';
+            document.querySelector('.modal-success').classList.add('active');
+        }
+
+        // 모달 여는 버튼 전체 연결
+        document.querySelectorAll('a[href="#cta"], a[href="#"]').forEach(btn => {
+            btn.addEventListener('click', e => {
+                e.preventDefault();
+                openModal();
+            });
+        });
     </script>
 
 </body>
